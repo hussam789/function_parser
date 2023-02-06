@@ -32,14 +32,14 @@ class DataProcessor:
         self.language = language
         self.language_parser = language_parser
 
-    def process_dee(self, nwo, ext) -> List[Dict[str, Any]]:
+    def process_dee(self, tmp_dir, nwo, sha, ext) -> List[Dict[str, Any]]:
         # Process dependees (libraries) to get function implementations
         indexes = []
-        _, nwo = remap_nwo(nwo)
-        if nwo is None:
-            return indexes
+#         _, nwo = remap_nwo(nwo)
+#         if nwo is None:
+#             return indexes
 
-        tmp_dir = download(nwo)
+#         tmp_dir = download(nwo)
         files = walk(tmp_dir, ext)
         # files = glob.iglob(tmp_dir.name + '/**/*.{}'.format(ext), recursive=True)
         sha = None
@@ -48,22 +48,22 @@ class DataProcessor:
             definitions = self.get_function_definitions(f)
             if definitions is None:
                 continue
-            if sha is None:
-                sha = get_sha(tmp_dir, nwo)
+#             if sha is None:
+#                 sha = get_sha(tmp_dir, nwo)
 
             nwo, path, functions = definitions
             indexes.extend((self.extract_function_data(func, nwo, path, sha) for func in functions if len(func['function_tokens']) > 1))
         return indexes
 
-    def process_dent(self, nwo, ext, library_candidates) -> Tuple[List[Dict[str, Any]], List[Tuple[str, str]]]:
+    def process_dent(self, tmp_dir, nwo, sha, ext, library_candidates) -> Tuple[List[Dict[str, Any]], List[Tuple[str, str]]]:
         # Process dependents (applications) to get function calls
         dents = []
         edges = []
-        _, nwo = remap_nwo(nwo)
-        if nwo is None:
-            return dents, edges
+#         _, nwo = remap_nwo(nwo)
+#         if nwo is None:
+#             return dents, edges
 
-        tmp_dir = download(nwo)
+#         tmp_dir = download(nwo)
         files = walk(tmp_dir, ext)
         sha = None
 
@@ -71,8 +71,8 @@ class DataProcessor:
             context_and_calls = self.get_context_and_function_calls(f)
             if context_and_calls is None:
                 continue
-            if sha is None:
-                sha = get_sha(tmp_dir, nwo)
+#             if sha is None:
+#                 sha = get_sha(tmp_dir, nwo)
 
             nwo, path, context, calls = context_and_calls
             libraries = []
