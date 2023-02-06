@@ -42,7 +42,7 @@ class DataProcessor:
 #         tmp_dir = download(nwo)
         files = walk(tmp_dir, ext)
         # files = glob.iglob(tmp_dir.name + '/**/*.{}'.format(ext), recursive=True)
-        sha = None
+#         sha = None
 
         for f in files:
             definitions = self.get_function_definitions(f)
@@ -65,7 +65,7 @@ class DataProcessor:
 
 #         tmp_dir = download(nwo)
         files = walk(tmp_dir, ext)
-        sha = None
+#         sha = None
 
         for f in files:
             context_and_calls = self.get_context_and_function_calls(f)
